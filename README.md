@@ -1,4 +1,8 @@
-# Da alcance de algunos nudos
+# El propósito es dar arcivos PLY de nudos "inflados"
+
+Si un nudo es procesado pero no sirve por alcance menor al umbral o por autointersecciones, genera un archivo PLY
+Si un nudo es exitoso, genera dos archivos PLY
+
 
 Argumentos: Cantidad de nudos, Cantidad de números en la parametrización, terna, número de iteraciones.
 
