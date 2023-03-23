@@ -2,7 +2,7 @@
 
 Si un nudo es procesado pero no sirve por alcance menor al umbral o por autointersecciones, genera un archivo PLY con el nudo unidimensional
 
-Si un nudo es exitoso, genera dos archivos PLY, el nudo unidimensional y el nudo inflado
+Si un nudo es exitoso, genera dos archivos PLY: el nudo unidimensional y el nudo inflado
 
 Argumentos: Cantidad de nudos, Cantidad de números en la parametrización, terna, número de iteraciones
 
