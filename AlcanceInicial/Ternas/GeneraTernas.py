@@ -5,11 +5,11 @@ from itertools import product as cartesian
 from math import gcd as gcd
 from datetime import datetime
 
-
-timestamp = 1528797322
-date_time = datetime.fromtimestamp(timestamp)
-date_time = datetime.fromtimestamp(timestamp)
-d = date_time.strftime("%m/%d/%Y, %H:%M:%S")
+# timestamp = 1528797322
+# date_time = datetime.fromtimestamp(timestamp)
+# date_time = datetime.fromtimestamp(timestamp)
+# d = date_time.strftime("%m/%d/%Y, %H:%M:%S")
+d = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
 A=[]
 for i in range(1,14):
