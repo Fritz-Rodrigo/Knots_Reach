@@ -59,7 +59,7 @@ def TrabajaNudo(Terna, fases, intervalos, iteraciones, umbral):
     if alcance < umbral:
       sirve = False
       motivo = 'Alcance'
-      print('No sive alcance menor a umbral=', umbral, 'alcance=', alcance)
+      print('No sirve alcance menor a umbral =', umbral, ', alcance =', alcance)
     else:
       sirve = True
       motivo = 'Sirve'
