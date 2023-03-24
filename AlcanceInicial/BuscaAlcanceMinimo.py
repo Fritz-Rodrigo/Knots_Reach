@@ -63,11 +63,11 @@ def TrabajaNudo(Terna, fases, intervalos, iteraciones, umbral):
     elif True in Aumentos:
       sirve = False
       motivo = 'Aumentos'
-      print('No sirve por saturación. Alcance mín =', alcance)
+      print('No sirve por autointersección (saturación). Alcance mín =', alcance)
     else:
       sirve = True
       motivo = 'Sirve'
-      print('Sí sirve: umbral =', umbral, ', alcance mín =', alcance)
+      print('Sí sirve. Alcance mín =', alcance)
 
   ruta = 'Nudos/Sencillos/'
   Ruta = FuncionesAuxiliares.GeneraPLYdeNudo(ruta, Nudo, Terna, fases, alcance, iteraciones, sirve, motivo)

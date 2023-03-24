@@ -49,8 +49,8 @@ def acotaAlcancePorEsferas(Nudo, intervalos, iteraciones):
 			mins.append(round(minimo/2,4))
 			if alcance_i < 1e-8:
 				autointerseccion = True
-				# print('Distancia cero:', round(alcance_i,16), 'Índices =', indices, 'dists =', dists, 'mins =', mins)
-				return AlcancesPuntuales, Aumentos, autointerseccion
+				print('Distancia cero =', round(alcance_i,16), 'en el índice', i)
+				# return AlcancesPuntuales, Aumentos, autointerseccion
 				#Si no sirve el nudo por autointersección, acá termina
 
 		AlcancesPuntuales.append(alcance_i)		
@@ -58,7 +58,7 @@ def acotaAlcancePorEsferas(Nudo, intervalos, iteraciones):
 
 	#Si no sirve el nudo por autointersección encontrada por saturación, acá termina
 	if True in Aumentos:
-		print('Saturado. Índices =', indices, 'dists =', dists, 'mins =', mins)
+		print('Saturado. Índices =', indices) #, 'dists =', dists, 'mins =', mins)
 		return AlcancesPuntuales, Aumentos, autointerseccion
 
 	A2 = AlcancesPuntuales.copy()
@@ -85,7 +85,7 @@ def acotaAlcancePorEsferas(Nudo, intervalos, iteraciones):
 					distancia_i_m = np.linalg.norm( Nudo[i] - Nudo[m] )
 					D.append( distancia_i_m )
 
-			minimo = max(D)
+			maximo = max(D)
 			###############
 
 			peso = 0
@@ -96,12 +96,12 @@ def acotaAlcancePorEsferas(Nudo, intervalos, iteraciones):
 				if (indice not in M) and (Aumentos[indice] != True):
 					#esto puede mejorar
 					distanciaIndice = np.linalg.norm( Nudo[i] - Nudo[indice] )
-					if  distanciaIndice <= minimo:
+					if  distanciaIndice <= maximo:
 						peso = peso+1
 						distancias.append(distanciaIndice)
 
 			if peso == 0:
-				alcance_i = minimo/3
+				alcance_i = maximo/3
 				Aumentos [indice]= False
 			else:
 				d = min(distancias)
