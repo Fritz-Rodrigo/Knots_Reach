@@ -47,13 +47,11 @@ def Rutina(Indices = [100], intervalos = 3000, iteraciones = 5, Fases = [[0,0,0]
 
 
 def main():
-    Rutina(Indices = [1, 50, 100 ],
+    Rutina(Indices = [0],
     	intervalos = 1000,
-    	iteraciones = 15,
-    	Fases = [[1,1,0]],
-    	umbral = 0.002)
-    #trabajar caso 0.001
+    	iteraciones = 3,
+    	Fases = [[1,0,1], [1,1,1]],
+    	umbral = 0.0001)
 
 if __name__ == "__main__":
     main()
-
