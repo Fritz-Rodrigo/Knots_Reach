@@ -20,7 +20,7 @@ from AlcancePorEsferas import acotaAlcancePorEsferas as acotaAlcancePorEsferas
 #Ruta
 #RutaAlcances
 #RutaAumentos
-def HazNudos(indice = 100, intervalos = 500, iteraciones = 5, Fase = [0,0,0], umbral=0.001):
+def HazNudos(indice = 100, intervalos = 500, iteraciones = 5, Fase = [1,1,1], umbral=0.001):
   terna = FuncionesAuxiliares.LeeTernas([indice])
   print("-Terna: ", terna[0])
   print("-Fase: ", Fase)
@@ -54,15 +54,20 @@ def TrabajaNudo(Terna, fases, intervalos, iteraciones, umbral):
   if autointerseccion:
     sirve = False
     motivo = 'Autoint'
-    print('No sirve por autointerseccion')
+    print('No sirve por autointersección. Alcance mín =', alcance)
   else:
     if alcance < umbral:
       sirve = False
       motivo = 'Alcance'
-      print('No sirve alcance menor a umbral =', umbral, ', alcance =', alcance)
+      print('No sirve: alcance menor al umbral =', umbral, ', alcance mín =', alcance)
+    elif True in Aumentos:
+      sirve = False
+      motivo = 'Aumentos'
+      print('No sirve por saturación. Alcance mín =', alcance)
     else:
       sirve = True
       motivo = 'Sirve'
+      print('Sí sirve: umbral =', umbral, ', alcance mín =', alcance)
 
   ruta = 'Nudos/Sencillos/'
   Ruta = FuncionesAuxiliares.GeneraPLYdeNudo(ruta, Nudo, Terna, fases, alcance, iteraciones, sirve, motivo)
