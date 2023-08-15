@@ -38,38 +38,52 @@ def HazNudos(indice = 100, intervalos = 500, iteraciones = 5, Fase = [1,1,1], um
 # 5) Clasifica si sirve o no dependiendo del umbral o si tiene autointersecciones
 def TrabajaNudo(Terna, fases, intervalos, iteraciones, umbral):
   a,b,c = Terna[0], Terna[1], Terna[2]
-  t = np.linspace(-np.pi, np.pi, intervalos, endpoint=False)
-  x, y, z = np.cos((a*t)+fases[0]), np.cos((b*t)+fases[1]), np.cos((c*t)+fases[2])
+  t = np.linspace(0, 2*np.pi, intervalos, endpoint=False)
+  
+  # Lissajous:
+  x,y,z = np.cos((a*t)+fases[0]), np.cos((b*t)+fases[1]), np.cos((c*t)+fases[2])
+  
+  # Fibonacci:
+  # x,y = np.cos((a*t)+fases[0]), np.cos((b*t)+fases[1]), 
+  # z = 0.5*np.cos((c*t)+fases[2]) + 0.5*np.sin((b*t)+fases[1])
+
+  # Trefoil
+  # x,y,z = np.sin(t) + 2*np.sin(t*2),  np.cos(t) - 2*np.cos(t*2),  - np.sin(3*t)
+
+  # Eight
+  # x,y,z = (2 + np.cos(2*t))*np.cos(3*t), (2 + np.cos(2*t))*np.sin(3*t), np.sin(4*t)
+
   
   #Hace el nudo con coordenadas [x[i], y[i], z[i]]
-  Nudo =[ [x[i], y[i], z[i]] for i in range(intervalos) ]
+  Nudo = [ [x[i], y[i], z[i]] for i in range(intervalos) ]
   Nudo = np.array(Nudo)
 
   Alcances, Aumentos, autointerseccion = acotaAlcancePorEsferas(Nudo, intervalos, iteraciones)
-  RutaAlcances = FuncionesAuxiliares.EscribeAlcancesPuntualesTXT(Alcances, Terna, fases)
+  RutaAlcances = FuncionesAuxiliares.EscribeAlcancesPuntualesTXT(Alcances, Terna, fases, Nudo, iteraciones)
   RutaAumentos = FuncionesAuxiliares.EscribeAumentosTXT(Aumentos, Terna, fases)
 
-  alcance = min(Alcances)
+  alcmin = min(Alcances)
+  alcmax  = max(Alcances)
 
   if autointerseccion:
     sirve = False
     motivo = 'Autoint'
-    print('No sirve por autointersección. Alcance mín =', alcance)
+    print('No sirve: autointersección. Alcance mín =', round(alcmin,4), 'máx =', round(alcmax,4))
   else:
-    if alcance < umbral:
+    if alcmin < umbral:
       sirve = False
       motivo = 'Alcance'
-      print('No sirve: alcance menor al umbral =', umbral, ', alcance mín =', alcance)
+      print('No sirve: alcance menor al umbral =', umbral, ', alcance mín =', round(alcmin,4), 'máx =', round(alcmax,4))
     elif True in Aumentos:
       sirve = False
       motivo = 'Aumentos'
-      print('No sirve por autointersección (saturación). Alcance mín =', alcance)
+      print('No sirve: saturación. Alcance mín =', round(alcmin,4), 'máx =', round(alcmax,4))
     else:
       sirve = True
       motivo = 'Sirve'
-      print('Sí sirve. Alcance mín =', alcance)
+      print('Sí sirve. Alcance mín =', round(alcmin,4), 'máx =', round(alcmax,4))
 
   ruta = 'Nudos/Sencillos/'
-  Ruta = FuncionesAuxiliares.GeneraPLYdeNudo(ruta, Nudo, Terna, fases, alcance, iteraciones, sirve, motivo)
+  Ruta = FuncionesAuxiliares.GeneraPLYdeNudo(ruta, Nudo, Terna, fases, alcmin, iteraciones, sirve, motivo)
   return Ruta, RutaAlcances, RutaAumentos, sirve
 

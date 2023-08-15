@@ -3,15 +3,31 @@ import numpy as np
 import random
 import sys
 
+#Lee el archivo Fases.txt
+#Se debe aumentar 5 por el encabezado
+def LeeFases(Indices):
+  Ternas = []
+  fichero = open('AlcanceInicial/Ternas/Fases.txt')
+  lineas = fichero.readlines()
+  for i in Indices:
+    terna_cadena = lineas[i+5]
+    terna_cadena = terna_cadena.replace('\n', '')
+    terna_cadena = terna_cadena.replace('[', '')
+    terna_cadena = terna_cadena.replace(']', '')
+    terna_arreglo = terna_cadena.split()
+    terna = [int(elemento) for elemento in terna_arreglo]
+    Ternas.append(terna)
+  return Ternas
+
 #Lee el archivo Ternas.txt
 #Se debe aumentar 5 por el encabezado
 def LeeTernas(Indices):
   Ternas = []
-  fichero = open('AlcanceInicial/Ternas/Ternas.txt')
+  fichero = open('AlcanceInicial/Ternas/Ternas1.txt')
   #fichero = open('Ternas/Ternas.txt')
   lineas = fichero.readlines()
   for i in Indices:
-    terna_cadena = lineas[i+5]
+    terna_cadena = lineas[i-1] #[i+5]
     terna_cadena = terna_cadena.replace('\n', '')
     terna_cadena = terna_cadena.replace('[', '')
     terna_cadena = terna_cadena.replace(']', '')
@@ -88,25 +104,28 @@ def GeneraPLYdeNudo(carpeta, Nudo, Terna, fase, alcance, iteraciones, sirve, mot
   Aristas = []
   for j in range( intervalos):
     Aristas.append([j%intervalos, (j+1)%intervalos])
-  nombre_x = "(" + str(Terna[0]) + "t+" +str(fase[0]) + ')'
-  nombre_y = "(" + str(Terna[1]) + "t+" +str(fase[1]) + ')'
-  nombre_z = "(" + str(Terna[2]) + "t+" +str(fase[2]) + ')'
-  info_nudo = nombre_x+nombre_y+nombre_z
+  nombre_x = "(" + str(Terna[0]) + "t+" + str(fase[0]) + ')'
+  nombre_y = "(" + str(Terna[1]) + "t+" + str(fase[1]) + ')'
+  nombre_z = "(" + str(Terna[2]) + "t+" + str(fase[2]) + ')'
+  # info_nudo = nombre_x + nombre_y + nombre_z
+  info_nudo = str(Terna[0]) +','+str(Terna[1])+','+str(Terna[2])+ '-' +str(round(fase[0],2))+','+str(round(fase[1],2))+','+str(round(fase[2],2))
   if sirve:
     etiqueta = ''
   else:
-    etiqueta = 'NoSirve'+motivo
-  info_rutina = '('+str(iteraciones)+'-'+str(intervalos)+'-'+ etiqueta +')'
-  name = carpeta+info_nudo+info_rutina
+    etiqueta = '-NoSirve' + motivo
+  info_rutina = '_' + str(iteraciones) +'-'+ str(intervalos) + etiqueta
+  name = carpeta + info_nudo + info_rutina
   Ruta = ArchivoPLY(name, vertices=Vertices, aristas=Aristas, terna=Terna, fases=fase, alcance=alcance)
   return Ruta
 
-def EscribeAlcancesPuntualesTXT(Alcances, Terna, fase):
-  nombre_x = "cos(" + str(Terna[0]) + "t+" +str(fase[0]) + ')_'
-  nombre_y = "cos(" + str(Terna[1]) + "t+" +str(fase[1]) + ')_'
-  nombre_z = "cos(" + str(Terna[2]) + "t+" +str(fase[2]) + ')'
-  nudo = nombre_x+nombre_y+nombre_z
-  name = 'Nudos/AlcancesIniciales/Alcances/'+'Alcances-'+nudo+'.txt'
+def EscribeAlcancesPuntualesTXT(Alcances, Terna, fase, Nudo, iteraciones):
+  npts = len(Nudo)
+  nombre_x = "cos(" + str(Terna[0]) + "t+" + str(round(fase[0],4)) + ')_'
+  nombre_y = "cos(" + str(Terna[1]) + "t+" + str(round(fase[1],4)) + ')_'
+  nombre_z = "cos(" + str(Terna[2]) + "t+" + str(round(fase[2],4)) + ')'
+  # nudo = nombre_x + nombre_y + nombre_z
+  nudo = str(Terna[0])+','+str(Terna[1])+','+str(Terna[2])+'-'+str(round(fase[0],4))+','+str(round(fase[1],4))+','+str(round(fase[2],4))
+  name = 'Nudos/AlcancesIniciales/Alcances/'+'Alcances_'+nudo+'_'+str(npts)+'pts'+'_'+str(iteraciones)+'its'+'.txt'
   with open(name, 'w') as writefile:
     writefile.write('###############################################'+"\n")
     writefile.write("# Alcances iniciales"+"\n")
@@ -120,10 +139,11 @@ def EscribeAlcancesPuntualesTXT(Alcances, Terna, fase):
 
 
 def EscribeAumentosTXT(Aumentos, Terna, fase):
-  nombre_x = "cos(" + str(Terna[0]) + "t+" +str(fase[0]) + ')_'
-  nombre_y = "cos(" + str(Terna[1]) + "t+" +str(fase[1]) + ')_'
-  nombre_z = "cos(" + str(Terna[2]) + "t+" +str(fase[2]) + ')'
-  nudo = nombre_x+nombre_y+nombre_z
+  nombre_x = "cos(" + str(Terna[0]) + "t+" + str(round(fase[0],4)) + ')_'
+  nombre_y = "cos(" + str(Terna[1]) + "t+" + str(round(fase[1],4)) + ')_'
+  nombre_z = "cos(" + str(Terna[2]) + "t+" + str(round(fase[2],4)) + ')'
+  # nudo = nombre_x + nombre_y + nombre_z
+  nudo = str(Terna[0])+','+str(Terna[1])+','+str(Terna[2])+'-'+str(round(fase[0],4))+','+str(round(fase[1],4))+','+str(round(fase[2],4))
   name = 'Nudos/AlcancesIniciales/Aumentos/'+'Aumentos-'+nudo+'.txt'
   with open(name, 'w') as writefile:
     writefile.write('###############################################'+"\n")
