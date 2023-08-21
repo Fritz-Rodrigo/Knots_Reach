@@ -6,6 +6,7 @@ import numpy as np
 #Acota alcance
 def acotaAlcancePorEsferas(Nudo, intervalos, iteraciones):
 	#Alcance inicial
+	factor = 0.3
 	Pesos = []
 	AlcancesPuntuales = []
 	Aumentos = []
@@ -40,10 +41,10 @@ def acotaAlcancePorEsferas(Nudo, intervalos, iteraciones):
 					distancias.append(distanciaIndice)
 
 		if peso == 0:
-			alcance_i = minimo/2
+			alcance_i = factor*minimo
 			Aumentos.append(False)
 		else:
-			alcance_i = min(distancias)/2
+			alcance_i = factor*min(distancias)
 			Aumentos.append(True)
 			indices.append(i)
 			dists.append(round(min(distancias)/2,4))
@@ -100,11 +101,11 @@ def acotaAlcancePorEsferas(Nudo, intervalos, iteraciones):
 						distancias.append(distanciaIndice)
 
 			if peso == 0:
-				alcance_i = 0.75*maximo
+				alcance_i = factor*maximo
 				Aumentos[indice] = False
 			else:
 				d = min(distancias)
-				alcance_i = 0.75*d
+				alcance_i = factor*d
 				Aumentos[indice] = True
 			AlcancesPuntuales[i] = alcance_i
 			Pesos = peso
