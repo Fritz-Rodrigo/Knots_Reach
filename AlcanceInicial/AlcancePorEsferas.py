@@ -47,8 +47,8 @@ def acotaAlcancePorEsferas(Nudo, intervalos, iteraciones):
 			alcance_i = factor*min(distancias)
 			Aumentos.append(True)
 			indices.append(i)
-			dists.append(round(min(distancias)/2,4))
-			mins.append(round(minimo/2,4))
+			dists.append(round(factor*min(distancias),4))
+			mins.append(round(factor*minimo,4))
 
 			#Si no sirve el nudo por autointersección, acá termina
 			if alcance_i < 1e-16:
