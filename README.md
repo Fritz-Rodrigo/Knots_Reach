@@ -7,10 +7,10 @@ If the curve has self-intersections or the reach exceeds the threshold, the seco
 Input: 
 - Number of knots
 - Number of Lissajous knots cosine parameters
-- Triplet for the frequencies in (x,y,z)
+- Triplet for the frequencies in $(x,y,z)$
 - Number of iterations
 - Number of points to form the curve
 
-The triplets are read from `AlcanceInicial/Ternas/Ternas1.txt`
+The triplets are read from `AlcanceInicial/Ternas/Ternas.txt`
 
-There is a script to generate the list of triplets `Ternas.txt`
+The script `AlcanceInicial/Ternas/GeneraTernas.py` generates the list of triplets `Ternas.txt` by selecting the range for $(n_x, n_y, n_z)$ to be relatively prime
