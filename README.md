@@ -1,13 +1,16 @@
-# Calcula los alcances de los nudos inflados
+# This is a python script that calculates the reach for the tubular neighborhood of thickened knots
 
-Si un nudo es procesado pero no sirve por alcance menor al umbral o por autointersecciones, genera un archivo PLY
+The output is one or two PLYs, the first corresponds to the 1D curve and the second to the triangulation of the resulting knot surface
 
-Si un nudo es exitoso, genera dos archivos PLY
+If the curve has self-intersections or the reach exceeds the threshold, the second PLY is not generated
 
-Argumentos: cantidad de nudos, cantidad de números en la parametrización, terna, número de iteraciones
+Input: 
+- Number of knots
+- Number of Lissajous knots cosine parameters
+- Triplet for the frequencies in (x,y,z)
+- Number of iterations
+- Number of points to form the curve
 
-El resultado depende del número de puntos en la parametrización
+The triplets are read from `AlcanceInicial/Ternas/Ternas1.txt`
 
-Lee las ternas del archivo AlcanceInicial/Ternas/Ternas1.txt
-
-El archivo Ternas.txt se puede volver a generar
+There is a script to generate the list of triplets `Ternas.txt`
